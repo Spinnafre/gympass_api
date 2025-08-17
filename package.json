@@ -1,0 +1,38 @@
+{
+  "name": "gympass_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "tsx watch src/server.ts",
+    "start:debug": "tsx watch --inspect=9229 src/server.ts",
+    "start:prod": "npm run build && node build/server.cjs",
+    "build": "tsup src --out-dir build",
+    "test": "vitest",
+    "test:debug": "vitest",
+    "test:unit": "vitest --watch --project unit",
+    "test:integration": "vitest --project integration",
+    "coverage": "vitest run --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/bcrypt": "6.0.0",
+    "@types/node": "24.1.0",
+    "prisma": "6.13.0",
+    "tsup": "8.5.0",
+    "tsx": "4.20.3",
+    "typescript": "5.9.2",
+    "vite-tsconfig-paths": "5.1.4",
+    "vitest": "3.2.4"
+  },
+  "dependencies": {
+    "@prisma/client": "6.13.0",
+    "bcrypt": "6.0.0",
+    "dotenv": "17.2.1",
+    "fastify": "^5.4.0",
+    "zod": "4.0.14"
+  }
+}

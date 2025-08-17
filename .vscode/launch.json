@@ -1,0 +1,95 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        // Launch Node.js app in debug mode
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch debug in production mode",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/build/src/server.js",
+            "runtimeArgs": [
+                "--inspect-brk"
+            ],
+            "env": {
+                "NODE_ENV": "prod"
+            }
+        },
+        // Attach to an already running Node.js process
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Process",
+            "processId": "${command:PickProcess}",
+            "restart": false,
+            "port": 9229,
+            "protocol": "inspector",
+            "timeout": 10000,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "name": "Start:Debug Script",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "start:debug"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "outputCapture": "std",
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        //  Attach to the TSX debug process
+        {
+            "name": "Attach to TSX Debug",
+            "type": "node",
+            "request": "attach",
+            "port": 9229,
+            "restart": false,
+            "timeout": 10000,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        //  Debug unit tests (with Vitest example)
+        {
+            "name": "Debug Vitest Unit Tests (Watch Mode)",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "test:unit"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/**",
+                "!**/node_modules/**"
+            ],
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ],
+            "smartStep": true,
+            "sourceMaps": true
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Run and Attach to start:debug",
+            "configurations": [
+                "Start:Debug Script",
+                "Attach to TSX Debug"
+            ]
+        }
+    ]
+}
