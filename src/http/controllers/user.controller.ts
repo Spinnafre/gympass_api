@@ -1,4 +1,4 @@
-import { UserAlreadyExistsError } from "@/services/errors/user.errors";
+import { UserAlreadyExistsError } from "@/services/errors/user-already-exists.error";
 import type { IUserService } from "@/services/user.service";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";

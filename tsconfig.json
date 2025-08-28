@@ -12,6 +12,7 @@
       "node"
     ],
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
       "@/*": [

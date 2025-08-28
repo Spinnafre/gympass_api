@@ -5,11 +5,6 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   plugins: [tsconfigPaths()],
   logLevel: "info",
-  resolve: {
-    alias: {
-      "@": resolve(__dirname, "./src"),
-    },
-  },
   test: {
     pool: "threads",
     logHeapUsage: true,
@@ -22,6 +17,9 @@ export default defineConfig({
           isolate: false,
           env: {
             NODE_ENV: "test",
+          },
+          alias: {
+            "@": resolve(__dirname, "./src"),
           },
           pool: "threads",
           testTimeout: 10000,

@@ -1,7 +1,8 @@
 import type { User } from "@/entities/User";
 import type { IUserRepository } from "@/repositories/user.repository";
-import { UserAlreadyExistsError } from "./errors/user.errors";
 import { hash } from "bcrypt";
+import { ResourceNotFoundError } from "./errors/resource-not-found.error";
+import { UserAlreadyExistsError } from "./errors/max-distance.error";
 
 export type RegisterUserInput = {
   name: string;
@@ -11,6 +12,7 @@ export type RegisterUserInput = {
 
 export interface IUserService {
   create({ email, name, password }: RegisterUserInput): Promise<User>;
+  findById(id: string): Promise<User | null>;
 }
 
 export class UserService implements IUserService {
@@ -30,5 +32,15 @@ export class UserService implements IUserService {
       name,
       password: password_hash,
     });
+  }
+
+  async findById(id: string): Promise<User | null> {
+    const user = await this.repository.findById(id);
+
+    if (!user) {
+      throw new ResourceNotFoundError();
+    }
+
+    return user;
   }
 }
