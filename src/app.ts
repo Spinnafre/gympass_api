@@ -4,6 +4,8 @@ import z, { ZodError } from "zod";
 import { env } from "./config/env";
 import fastifyJwt from "@fastify/jwt";
 import { ResourceNotFoundError } from "./services/errors/resource-not-found.error";
+import { gymRoutes } from "./http/routes/gym.routes";
+import { checkInRoutes } from "./http/routes/checkIn.routes";
 
 export const app = fastify({
   logger: env.NODE_ENV == "test" ? false : true,
@@ -14,6 +16,8 @@ app.register(fastifyJwt, {
 });
 
 app.register(appRoutes);
+app.register(gymRoutes);
+app.register(checkInRoutes);
 
 app.setErrorHandler((err, _, res) => {
   if (err instanceof ZodError) {
