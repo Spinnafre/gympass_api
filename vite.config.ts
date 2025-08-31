@@ -9,8 +9,8 @@ export default defineConfig({
     pool: "threads",
     logHeapUsage: true,
     restoreMocks: true,
-    watch: true,
     environment: "node",
+    watch: true,
     projects: [
       {
         test: {
@@ -27,13 +27,17 @@ export default defineConfig({
           include: ["**/*.unit.test.ts"],
         },
       },
-      // {
-      //   extends: "./vitest_integration.config.ts",
-      //   test: {
-      //     name: "integration",
-      //     include: ["**/*.integration.test.ts"],
-      //   },
-      // },
+      {
+        test: {
+          isolate: false,
+          name: "e2e",
+          alias: {
+            "@": resolve(__dirname, "./src"),
+          },
+          environment: "prisma",
+          include: ["**/*.e2e.test.ts"],
+        },
+      },
     ],
   },
   esbuild: {

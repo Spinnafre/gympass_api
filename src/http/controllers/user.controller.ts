@@ -1,4 +1,4 @@
-import { UserAlreadyExistsError } from "@/services/errors/user-already-exists.error";
+import { UserAlreadyExistsError } from "@/services/errors/max-distance.error";
 import type { IUserService } from "@/services/user.service";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
@@ -16,7 +16,6 @@ export class UserController {
     const { email, name, password } = requestSchema.parse(request.body);
 
     try {
-      console.log(this);
       const created = await this.userService.create({ email, name, password });
 
       return response.status(201).send(created);
@@ -30,5 +29,15 @@ export class UserController {
 
       throw error;
     }
+  }
+
+  async profile(request: FastifyRequest, response: FastifyReply) {
+    const user = await this.userService.findById(request.user.id);
+
+    const { id, name, email, created_at } = user;
+
+    return response.status(200).send({
+      user: { id, name, email, created_at },
+    });
   }
 }

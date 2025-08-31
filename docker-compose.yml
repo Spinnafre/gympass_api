@@ -1,5 +1,5 @@
 services:
-  api-gympass:
+  api-db:
     image: bitnami/postgresql
     ports:
       - 5432:5432

@@ -12,7 +12,7 @@ export type RegisterUserInput = {
 
 export interface IUserService {
   create({ email, name, password }: RegisterUserInput): Promise<User>;
-  findById(id: string): Promise<User | null>;
+  findById(id: string): Promise<User>;
 }
 
 export class UserService implements IUserService {
@@ -34,11 +34,12 @@ export class UserService implements IUserService {
     });
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string): Promise<User> {
     const user = await this.repository.findById(id);
 
     if (!user) {
-      throw new ResourceNotFoundError();
+      // TODO: add resource name to error
+      throw new ResourceNotFoundError("User");
     }
 
     return user;

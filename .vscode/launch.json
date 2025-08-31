@@ -81,6 +81,28 @@
             ],
             "smartStep": true,
             "sourceMaps": true
+        },
+        {
+            "name": "Debug Vitest E2E Tests (Watch Mode)",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "test:e2e:watch"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/**",
+                "!**/node_modules/**"
+            ],
+            "skipFiles": [
+                "<node_internals>/**",
+                "**/node_modules/**"
+            ],
+            "smartStep": true,
+            "sourceMaps": true
         }
     ],
     "compounds": [
