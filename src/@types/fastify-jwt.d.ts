@@ -1,10 +1,12 @@
+import type { UserRoles } from "@/entities/User";
 import "@fastify/jwt";
 
 declare module "@fastify/jwt" {
   interface FastifyJWT {
-    payload: { name: string };
+    payload: { role: string };
     user: {
-      id: string;
+      sub: string;
+      role: UserRoles;
     };
   }
 }

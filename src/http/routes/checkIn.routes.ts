@@ -4,6 +4,7 @@ import { verifyJwt } from "../middlewares/verify-jwt";
 import { CheckInController } from "../controllers/check-ins.controller";
 import { CheckInService } from "@/services/check-in.service";
 import { PrismaGymsRepository } from "@/repositories/prisma/gym.repository";
+import { verifyUserRole } from "../middlewares/verify-roles";
 
 export async function checkInRoutes(app: FastifyInstance) {
   const checkInRepository = new PrismaCheckInsRepository();
@@ -13,7 +14,11 @@ export async function checkInRoutes(app: FastifyInstance) {
 
   app.addHook("onRequest", verifyJwt);
 
-  app.post("/checkIns", checkInControlller.create.bind(checkInControlller));
+  app.post(
+    "/checkIns",
+    { onRequest: [verifyUserRole("ADMIN")] },
+    checkInControlller.create.bind(checkInControlller)
+  );
 
   app.get(
     "/check-ins/history",

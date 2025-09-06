@@ -3,6 +3,7 @@ import { GymController } from "../controllers/gym.controller";
 import { PrismaGymsRepository } from "@/repositories/prisma/gym.repository";
 import type { FastifyInstance } from "fastify";
 import { verifyJwt } from "../middlewares/verify-jwt";
+import { verifyUserRole } from "../middlewares/verify-roles";
 
 export async function gymRoutes(app: FastifyInstance) {
   const gymRepository = new PrismaGymsRepository();
@@ -11,7 +12,11 @@ export async function gymRoutes(app: FastifyInstance) {
 
   app.addHook("onRequest", verifyJwt);
 
-  app.post("/gyms", gymControlller.create.bind(gymControlller));
+  app.post(
+    "/gyms",
+    { onRequest: [verifyUserRole("ADMIN")] },
+    gymControlller.create.bind(gymControlller)
+  );
   app.get("/gyms/search", gymControlller.search.bind(gymControlller));
   app.get("/gyms/nearby", gymControlller.nearby.bind(gymControlller));
 }

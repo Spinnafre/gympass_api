@@ -3,6 +3,7 @@ import { appRoutes } from "./http/routes";
 import z, { ZodError } from "zod";
 import { env } from "./config/env";
 import fastifyJwt from "@fastify/jwt";
+import fastifyCookie from "@fastify/cookie";
 import { ResourceNotFoundError } from "./services/errors/resource-not-found.error";
 import { gymRoutes } from "./http/routes/gym.routes";
 import { checkInRoutes } from "./http/routes/checkIn.routes";
@@ -13,7 +14,13 @@ export const app = fastify({
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
+  cookie: {
+    signed: false,
+    cookieName: "refresh-token",
+  },
 });
+
+app.register(fastifyCookie);
 
 app.register(appRoutes);
 app.register(gymRoutes);

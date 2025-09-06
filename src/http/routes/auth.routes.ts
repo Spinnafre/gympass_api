@@ -13,4 +13,5 @@ export async function authenticationRoutes(app: FastifyInstance) {
   );
 
   app.post("/sessions", authControlller.auth.bind(authControlller));
+  app.patch("/refresh", authControlller.refresh.bind(authControlller));
 }
