@@ -10,8 +10,9 @@
     "build": "tsup src --out-dir build",
     "test": "vitest",
     "test:debug": "vitest",
-    "test:unit": "vitest --watch --project unit",
-    "test:e2e": "vitest --project e2e",
+    "test:unit": "vitest run --project unit",
+    "test:unit:watch": "vitest --watch --project unit",
+    "test:e2e": "vitest run --project e2e",
     "test:e2e:watch": "vitest --watch --project e2e",
     "coverage": "vitest run --coverage"
   },
